@@ -1,0 +1,55 @@
+version: '3'
+services:
+  mariadb: 
+    build: mariadb
+    volumes:
+      - mdb_vol:/var/lib/mysql
+    networks:
+      dockern:
+        ipv4_address: 10.0.0.2
+    restart: on-failure
+  nginx:
+    build: nginx
+    volumes:
+      - ./camagru_back:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - "mariadb"
+      - "php"
+    networks:
+      dockern:
+        ipv4_address: 10.0.0.3
+    restart: on-failure
+  
+  php:
+    build: php
+    volumes:
+    expose:
+      - "9000"
+    networks:
+      dockern:
+        ipv4_address: 10.0.0.4
+    depends_on:
+      - mariadb
+    restart: on-failure
+    command: ["php-fpm"]
+  
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    #   - MYSQL_USER=${MYSQL_USER}
+    #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    #   - MYSQL_USER2=${MYSQL_USER2}
+    #   - MYSQL_PASSWORD2=${MYSQL_PASSWORD2}
+    #   - DB_HOST=${DB_HOST}
+    #   - HOST_NAME=${HOST_NAME}
+volumes:
+  mdb_vol: {}
+networks:
+  dockern: 
+    ipam:
+      config:
+        - subnet: 10.0.0.0/29
+          gateway: 10.0.0.1
+
+  
