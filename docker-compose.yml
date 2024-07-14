@@ -24,7 +24,6 @@ services:
   
   php:
     build: php
-    volumes:
     expose:
       - "9000"
     networks:
