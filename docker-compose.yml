@@ -37,17 +37,12 @@ services:
         ipv4_address: 10.0.0.4
     depends_on:
       - mariadb
+    env_file:
+      - .env
     restart: on-failure
     command: ["php-fpm"]
   
-    # environment:
-    #   - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    #   - MYSQL_USER=${MYSQL_USER}
-    #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    #   - MYSQL_USER2=${MYSQL_USER2}
-    #   - MYSQL_PASSWORD2=${MYSQL_PASSWORD2}
-    #   - DB_HOST=${DB_HOST}
-    #   - HOST_NAME=${HOST_NAME}
+  
 volumes:
   mdb_vol: {}
 networks:
