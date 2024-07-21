@@ -30,6 +30,7 @@ services:
     build: php
     volumes:
       - ./camagru_back:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini  
     expose:
       - "9000"
     networks:
@@ -42,6 +43,14 @@ services:
     restart: on-failure
     command: ["php-fpm"]
   
+  mailhog:
+    image: mailhog/mailhog
+    ports: 
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+        dockern:
+          ipv4_address: 10.0.0.5
   
 volumes:
   mdb_vol: {}

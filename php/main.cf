@@ -1,0 +1,4 @@
+relayhost = [mailhog]:1025
+smtp_tls_security_level = may
+smtp_tls_note_starttls_offer = yes
+smtp_sasl_auth_enable = no
